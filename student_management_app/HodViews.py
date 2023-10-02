@@ -141,6 +141,7 @@ def add_student_save(request):
         else:
             form=AddStudentForm(request.POST,request.FILES)
             if form.is_valid():
+                print("im here")
                 first_name=form.cleaned_data["first_name"]
                 last_name=form.cleaned_data["last_name"]
                 username=form.cleaned_data["username"]
@@ -155,6 +156,7 @@ def add_student_save(request):
                 fs=FileSystemStorage()
                 filename=fs.save(profile_pic.name,profile_pic)
                 profile_pic_url=fs.url(filename)
+                print(session_year, session_year_id)
 
                 try:
                     user=CustomUser.objects.create_user(username=username,password=password,email=email,last_name=last_name,first_name=first_name,user_type=3)
@@ -165,6 +167,8 @@ def add_student_save(request):
                     user.students.session_year_id=session_year
                     user.students.gender=sex
                     user.students.profile_pic=profile_pic_url
+                    print(profile_pic_url)
+                    print(session_year, session_year_id)
                     user.save()
                     messages.success(request,"Successfully Added Student")
                     send_mail("Account Created succesfully", "Dear Student you have beeen admitted in our application", settings.EMAIL_HOST_USER, [email], fail_silently=True)
@@ -173,6 +177,7 @@ def add_student_save(request):
                     messages.error(request,"Failed to Add Student")
                     return HttpResponseRedirect(reverse("add_student"))
             else:
+                print("im not here")
                 form=AddStudentForm(request.POST)
                 return render(request, "hod_template/add_student_template.html", {"form": form})
 

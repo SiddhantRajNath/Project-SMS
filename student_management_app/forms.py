@@ -37,6 +37,8 @@ class AddStudentForm(forms.Form):
     except:
         session_list=[]
 
+    print("not list", session_list)
+
     gender_choice=(
         ("Male","Male"),
         ("Female","Female")
@@ -45,6 +47,7 @@ class AddStudentForm(forms.Form):
     course=forms.ChoiceField(label="Course",choices=course_list,widget=forms.Select(attrs={"class":"form-control"}))
     sex=forms.ChoiceField(label="Sex",choices=gender_choice,widget=forms.Select(attrs={"class":"form-control"}))
     session_year_id=forms.ChoiceField(label="Session Year",choices=session_list,widget=forms.Select(attrs={"class":"form-control"}))
+    print(session_year_id)
     profile_pic=forms.FileField(label="Profile Pic",max_length=50,widget=forms.FileInput(attrs={"class":"form-control"}))
 
 class EditStudentForm(forms.Form):
